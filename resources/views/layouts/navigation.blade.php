@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-300">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -15,10 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('timeline')" :active="request()->routeIs('timeline')">
+                        {{ __('Timeline') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+
+            @auth
+                 <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -31,6 +38,9 @@
                                 </svg>
                             </div>
                         </button>
+
+
+                                    
                     </x-slot>
 
                     <x-slot name="content">
@@ -47,6 +57,24 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
+            @else
+
+            {{-- Authentication Link  --}}
+
+            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-nav-link>
+
+                <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-nav-link>
+            </div>
+
+
+            @endauth
+           
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -68,7 +96,8 @@
             </x-responsive-nav-link>
         </div>
 
-        <!-- Responsive Settings Options -->
+        @auth
+              <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
@@ -88,5 +117,23 @@
                 </form>
             </div>
         </div>
+
+        @else
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                {{ __('Login') }}
+            </x-responsive-nav-link>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
+            </div>
+        </div>
+
+
+        @endauth 
+
     </div>
 </nav>
