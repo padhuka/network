@@ -18,7 +18,12 @@ class TimelineController extends Controller
     {
 
     
-       $statuses = Status::where('user_id', Auth::user()->id)->get();
+    //    $statuses = Status::where('user_id', Auth::user()->id)->get();
+
+    //cara lebih simple, menggunakan relasi
+
+        $statuses = Auth::user()->statuses;
+    
        //dd($statuses);
        return view('timeline', compact('statuses'));
     }

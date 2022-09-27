@@ -1,13 +1,70 @@
 <x-app-layout>
 
-    <div class="bg-red-500 max-w-screen-x1 px-4 sm:px-6 lg:px-8 mx-auto">
+    <x-container>
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, esse? Impedit id debitis perferendis assumenda minima. Voluptate nisi quo eius nemo blanditiis id incidunt reprehenderit quaerat impedit? Dolorum, animi adipisci?</p>
-        <p>Rerum repudiandae similique laudantium itaque. Rerum nemo nobis, officiis libero velit tenetur optio est deserunt architecto iste illo doloremque autem unde mollitia, inventore saepe hic dolorum magnam ratione harum atque?</p>
-        <p>Ad laboriosam praesentium ullam, repellat facere beatae culpa possimus tempora qui velit laborum veniam ipsum consequatur soluta inventore earum? Voluptatibus esse maiores delectus ad atque quod deserunt facere repellat quidem!</p>
-        <p>Quia, nobis consequuntur nulla sed eligendi ullam ipsa sit nam illum quidem cum numquam modi neque qui magni provident eos possimus quae, assumenda enim vel incidunt itaque architecto voluptatum. Ipsam.</p>
-        <p>Natus modi officia animi dolorum, vero unde magnam, laudantium quaerat quibusdam cumque ducimus similique culpa ad assumenda, voluptatem error deleniti sit inventore corrupti voluptatibus repellendus nam deserunt maxime. Perspiciatis, laborum?</p>
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-7">
+                <div class="border p-5 rounded-xl space-y-5">
+                    <div class="space-y-6">
+                        @foreach ($statuses as $status)
+                            <div class="flex">
+                                <div class="flex-shrink-0 mr-3">
+                                    <img class="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150" alt="{{ $status->user->name}}">
+                                </div>
+                                <div>
+                                    <div class="font-semibold"> 
+                                        {{ $status->user->name}}
+                                    </div>
+                                
+                                    <div class="leading-relaxed">
+                                        {{ $status->body }}
+                                    </div>
+            
+                                    <div class="text-sm text-gray-600">
+                                        {{ $status->created_at->diffForHumans() }}
+                                    </div>
+                                 </div>
+                    
+                             </div>
+                        @endforeach
+                    </div>
+                </div>
+        
+               
+            </div>
+                    
+            <div class="col-span-5">
+         
+                <div class="border p-5 rounded-xl">
 
-    </div>
+                    <h1 class="font-semibold mb-5"> Recently Follow</h1>
 
+                   <div class="space-y-6">
+
+                    @foreach (Auth::user()->follows()->limit(3)->get() as $user)
+
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 mr-3">
+                            <img class="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150" alt="{{ $status->user->name}}">
+                        </div>
+                        <div>
+                            <div class="font-semibold"> 
+                               {{ $user->name }}                            
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                {{ $user->pivot->created_at->diffForHumans() }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                @endforeach
+                   </div>
+                   
+                </div>
+            </div>
+                
+        </div>
+      
+    </x-container>
+   
 </x-app-layout>
