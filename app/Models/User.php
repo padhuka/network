@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,6 +19,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
@@ -42,12 +44,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function gravatar($size = 100)
+    {
+        $default ="mm";
+        $email ="dhuka.cahyanto@gmail.com";
+        return $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+    }
+
     public function statuses()
     {
       
         return $this->hasMany(Status::class);
 
     }
+
+    public function makeStatus($string){
+        
+        $this->statuses()->create([
+            'body' => $string,
+            'identifier' => Str::slug($this->id . Str::random(10)),
+        ]);
+
+    }
+
 
     public function timeline()
     {

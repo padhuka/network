@@ -2,28 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Status;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Http\Requests\StatusRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StatusController extends Controller
 {
     
-    public function store(Request $request)
+    public function store(StatusRequest $request)
     {
 
-        $request->validate([
-            'body' => ['required'],
-        ]);
+      
 
-        Status::create([
-            'body' => $request->body,
-            'identifier' => Str::random(32),
-            'user_id' => Auth::user()->id()
+        // Status::create([
+        //     'body' => $request->body,
+        //     'identifier' => Str::random(32),
+        //     'user_id' => Auth::id(),
 
-        ]);
+        // ]);
+
+        // Auth::user()->statuses()->create([
+        //     'body' => $request->body,
+        //     'identifier' => Str::random(32),
+          
+        // ]);
+
+        //lebih simple
+
+        // Auth::user()->makeStatus($request->body);
+
+        // lebih simple lagi dimasukkan ke StatusRequest
+        $request->make($request->body);
+        return redirect()->back();
+
     }
 
 

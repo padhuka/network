@@ -13,7 +13,7 @@
 
                         <div class="flex">
                             <div class="flex-shrink-0 mr-3">
-                                <img class="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150" alt="{{  Auth::user()->name}}">
+                                <img class="w-10 h-10 rounded-full" src="{{ Auth::user()->gravatar() }}" alt="{{  Auth::user()->name}}">
                             </div>
                             <div class="w-full">
                                 <div class="font-semibold"> 
@@ -46,7 +46,7 @@
                         <x-card>
                             <div class="flex">
                                 <div class="flex-shrink-0 mr-3">
-                                    <img class="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150" alt="{{ $status->user->name}}">
+                                    <img class="w-10 h-10 rounded-full" src="{{ $status->user->gravatar() }}" alt="{{ $status->user->name}}">
                                 </div>
                                 <div>
                                     <div class="font-semibold"> 
@@ -83,7 +83,7 @@
 
                     <div class="flex items-center">
                         <div class="flex-shrink-0 mr-3">
-                            <img class="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150" alt="{{ $status->user->name}}">
+                            <img class="w-10 h-10 rounded-full" src="{{ $user->gravatar() }}" alt="{{ $status->user->name}}">
                         </div>
                         <div>
                             <div class="font-semibold"> 
